@@ -17,7 +17,7 @@
                 <table class="table-auto w-full">
                     <thead>
                         <tr>
-                            <th class="border px-6 py-4">ID</th>
+                            <th class="border px-6 py-4">No</th>
                             <th class="border px-6 py-4">Name</th>
                             <th class="border px-6 py-4">Email</th>
                             <th class="border px-6 py-4">Roles</th>
@@ -25,9 +25,10 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php $no = 1; @endphp
                         @forelse ($user as $item)
                         <tr>
-                            <td class="border px-6 py-4"> {{ $item->id }}</td>
+                            <td class="border px-6 py-4"> {{ $no++ }}</td>
                             <td class="border px-6 py-4">{{ $item->name }}</td>
                             <td class="border px-6 py-4">{{ $item->email }}</td>
                             <td class="border px-6 py-4">{{ $item->roles }}</td>
