@@ -17,28 +17,32 @@
                 <table class="table-auto w-full">
                     <thead>
                         <tr>
-                            <th class="border px-6 py-4">No</th>
-                            <th class="border px-6 py-4">Name</th>
-                            <th class="border px-6 py-4">Price</th>
-                            <th class="border px-6 py-4">Rate</th>
-                            <th class="border px-6 py-4">Types</th>
-                            <th class="border px-6 py-4">Action</th>
+                            <th class="border px-6 py-2">No</th>
+                            <th class="border px-6 py-2">Gambar</th>
+                            <th class="border px-6 py-2">Name</th>
+                            <th class="border px-6 py-2">Price</th>
+                            <th class="border px-6 py-2">Rate</th>
+                            <th class="border px-6 py-2">Types</th>
+                            <th class="border px-6 py-2">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php $no = 1; @endphp
                         @forelse ($food as $item)
                         <tr>
-                            <td class="border px-6 py-4"> {{ $no++ }}</td>
-                            <td class="border px-6 py-4">{{ $item->name }}</td>
-                            <td class="border px-6 py-4">{{ number_format($item->price) }}</td>
-                            <td class="border px-6 py-4">{{ $item->rate }}</td>
-                            <td class="border px-6 py-4">{{ $item->types }}</td>
-                            <td class="border px-6 py-4" text-center>
-                                <a href="{{ route('food.edit', $item->id) }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded">Edit</a>
+                            <td class="border px-6 py-2 text-center"> {{ $no++ }}</td>
+                            <td class="border px-6 py-2">
+                                <img src="{{ $item->picturePath }}" alt="{{ $item->name }}" class="w-full rounded w-12 h-12 mx-auto">
+                            </td>
+                            <td class="border px-6 py-2">{{ $item->name }}</td>
+                            <td class="border px-6 py-2">{{ number_format($item->price) }}</td>
+                            <td class="border px-6 py-2 text-center">{{ $item->rate }}</td>
+                            <td class="border px-6 py-2">{{ $item->types }}</td>
+                            <td class="border px-6 py-2 text-center">
+                                <a href="{{ route('food.edit', $item->id) }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white px-4 mx-2 rounded">Edit</a>
                                 <form action="{{ route('food.destroy', $item->id) }}" method="POST" class='inline-block'>
                                     {!! method_field('delete') . csrf_field() !!}
-                                    <button type='submit' class='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mx-2 rounded'>Delete</button>
+                                    <button type='submit' class='bg-red-500 hover:bg-red-700 text-white px-4 mx-2 rounded'>Delete</button>
                                 </form>
                             </td>
                         </tr>
