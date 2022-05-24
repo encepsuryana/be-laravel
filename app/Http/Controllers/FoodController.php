@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Http\Requests\FoodRequest;
+use App\Models\Food;
 use Illuminate\Http\Request;
-use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class FoodController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +16,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::paginate(5);
+        $food = Food::paginate(5);
 
-        return view('users.index', [
-            'user' => $user
+        return view('food.index', [
+            'food' => $food
         ]);
     }
 
@@ -30,7 +30,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('food.create');
     }
 
     /**
@@ -39,17 +39,15 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(FoodRequest $request)
     {
         $data = $request->all();
 
-        $data['profile_photo_path'] = $request->file('profile_photo_path')->store('profile-photos', 'public');
+        $data['picturePath'] = $request->file('picturePath')->store('assets/foods', 'public');
 
-        $data['password'] = Hash::make($data['password']);
+        Food::create($data);
 
-        User::create($data);
-
-        return redirect()->route('users.index');
+        return redirect()->route('food.index');
     }
 
     /**
@@ -58,7 +56,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Food $food)
     {
         //
     }
@@ -69,13 +67,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Food $food)
     {
-        return view('users.edit', [
-            'item' => $user
+        return view('food.edit', [
+            'item' => $food
         ]);
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -84,20 +81,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, User $user)
+    public function update(FoodRequest $request, Food $food)
     {
         $data = $request->all();
 
         //update profile photo
-        if ($request->file('profile_photo_path')) {
-            $data['profile_photo_path'] = $request->file('profile_photo_path')->store('profile-photos', 'public');
+        if ($request->file('picturePath')) {
+            $data['picturePath'] = $request->file('picturePath')->store('assets/foods', 'public');
         }
 
-        $data['password'] = Hash::make($data['password']);
+        $food->update($data);
 
-        $user->update($data);
-
-        return redirect()->route('users.index');
+        return redirect()->route('food.index');
     }
 
     /**
@@ -106,10 +101,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Food $food)
     {
-        $user->delete();
+        $food->delete();
 
-        return redirect()->route('users.index');
+        return redirect()->route('food.index');
     }
 }
