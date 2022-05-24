@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\Actions\Fortify\PasswordValidationRules;
 use Illuminate\Foundation\Http\FormRequest;
+// use App\Actions\Fortify\PasswordValidationRules;
 
 class UserRequest extends FormRequest
 {
-    use PasswordValidationRules;
+    // use PasswordValidationRules;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -27,9 +27,9 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'profile_photo_path' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'password' => $this->passwordRules(),
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $this->route('user')->id],
+            'profile_photo_path' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            // 'password' => $this->passwordRules(),
             'address' => ['required', 'string'],
             'roles' => ['required', 'string', 'max:255', 'in:USER,ADMIN'],
             'houseNumber' => ['required', 'string', 'max:255'],

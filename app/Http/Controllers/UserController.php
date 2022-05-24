@@ -93,7 +93,19 @@ class UserController extends Controller
             $data['profile_photo_path'] = $request->file('profile_photo_path')->store('profile-photos', 'public');
         }
 
-        $data['password'] = Hash::make($data['password']);
+        //if password is empty, do not update password
+        if ($request->input('password')) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
+        }
+
+        //if email not changed, do not update email
+        if ($request->input('email') == $user->email) {
+            unset($data['email']);
+        }
+
+        
 
         $user->update($data);
 

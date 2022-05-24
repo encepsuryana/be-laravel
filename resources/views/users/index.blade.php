@@ -17,26 +17,26 @@
                 <table class="table-auto w-full">
                     <thead>
                         <tr>
-                            <th class="border px-6 py-4">No</th>
-                            <th class="border px-6 py-4">Name</th>
-                            <th class="border px-6 py-4">Email</th>
-                            <th class="border px-6 py-4">Roles</th>
-                            <th class="border px-6 py-4">Action</th>
+                            <th class="border px-6 py-2">No</th>
+                            <th class="border px-6 py-2">Name</th>
+                            <th class="border px-6 py-2">Email</th>
+                            <th class="border px-6 py-2">Roles</th>
+                            <th class="border px-6 py-2">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php $no = 1; @endphp
                         @forelse ($user as $item)
                         <tr>
-                            <td class="border px-6 py-4"> {{ $no++ }}</td>
-                            <td class="border px-6 py-4">{{ $item->name }}</td>
-                            <td class="border px-6 py-4">{{ $item->email }}</td>
-                            <td class="border px-6 py-4">{{ $item->roles }}</td>
-                            <td class="border px-6 py-4" text-center>
-                                <a href="{{ route('users.edit', $item->id) }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded">Edit</a>
+                            <td class="border px-6 py-2 text-center"> {{ $no++ }}</td>
+                            <td class="border px-6 py-2">{{ $item->name }}</td>
+                            <td class="border px-6 py-2">{{ $item->email }}</td>
+                            <td class="border px-6 py-2 text-center">{{ $item->roles }}</td>
+                            <td class="border px-6 py-2 text-center">
+                                <a href="{{ route('users.edit', $item->id) }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white px-4 mx-2 rounded">Edit</a>
                                 <form action="{{ route('users.destroy', $item->id) }}" method="POST" class='inline-block'>
                                     {!! method_field('delete') . csrf_field() !!}
-                                    <button type='submit' class='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mx-2 rounded'>Delete</button>
+                                    <button type='submit' class='bg-red-500 hover:bg-red-700 text-white px-4 mx-2 rounded'>Delete</button>
                                 </form>
                             </td>
                         </tr>
